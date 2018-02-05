@@ -39,4 +39,18 @@ module.exports = function(app, db) {
 			}
 		})
   });
+
+	app.put('/notes/:id', (req, res) => {
+  	const id = req.params.id;
+  	const details = { '_id': new ObjectID(id) };
+  	const note = { text: req.body.body, title: req.body.title };
+  	db.collection('notes').update(details, note, (err, result) => {
+  		if (err) {
+  			res.send({ 'error': 'an error has occured' });
+  		} else {
+  			res.send( 'Note title updated to "'+req.body.title+'"');
+  		}
+  	})
+  })
+
 };
